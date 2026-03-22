@@ -1046,7 +1046,20 @@ textarea { resize: vertical; min-height: 80px; }
   .bgp-root, .sim-root { height: auto; }
 }
 
+@media (max-width: 900px) {
+  .content {
+    padding: 10px;
+  }
+  .card {
+    padding: 10px;
+  }
+}
 
+
+.card, .tbl-wrap, .bitmap-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
 </style>
 </head>
 <body>
@@ -18476,17 +18489,4 @@ function aboutNetAnim(){
 </script>
 
 
-@media (max-width: 900px) {
-  .content {
-    padding: 10px;
-  }
-  .card {
-    padding: 10px;
-  }
-}
 
-
-.card, .tbl-wrap, .bitmap-wrap {
-  width: 100%;
-  overflow-x: auto;
-}
