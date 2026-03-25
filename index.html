@@ -5,9 +5,9 @@
 <link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzBjMGYxYSIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iOSIgcj0iMy41IiBmaWxsPSIjNWI5Y2Y2Ii8+PGNpcmNsZSBjeD0iNyIgY3k9IjIyIiByPSIzIiBmaWxsPSIjMzhkOWMwIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIyMiIgcj0iMyIgZmlsbD0iIzRhZGU4MCIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMjIiIHI9IjIuNSIgZmlsbD0iI2ZiYmYyNCIvPjxsaW5lIHgxPSIxNiIgeTE9IjEyLjUiIHgyPSI3IiB5Mj0iMTkiIHN0cm9rZT0iIzViOWNmNiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1vcGFjaXR5PSIwLjciLz48bGluZSB4MT0iMTYiIHkxPSIxMi41IiB4Mj0iMjUiIHkyPSIxOSIgc3Ryb2tlPSIjNWI5Y2Y2IiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLW9wYWNpdHk9IjAuNyIvPjxsaW5lIHgxPSIxNiIgeTE9IjEyLjUiIHgyPSIxNiIgeTI9IjE5LjUiIHN0cm9rZT0iIzViOWNmNiIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1vcGFjaXR5PSIwLjciLz48bGluZSB4MT0iNyIgeTE9IjIyIiB4Mj0iMTYiIHkyPSIyMiIgc3Ryb2tlPSIjMzhkOWMwODAiIHN0cm9rZS13aWR0aD0iMSIvPjxsaW5lIHgxPSIxNiIgeTE9IjIyIiB4Mj0iMjUiIHkyPSIyMiIgc3Ryb2tlPSIjMzhkOWMwODAiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPg==">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SubnetLab Pro — Built by Chaithanya Kumar Katari</title>
-<meta name="author" content="Chaithanya Kumar Katari">
-<meta name="description" content="SubnetLab Pro — A complete IPv4/IPv6 subnetting toolkit. Built by Chaithanya Kumar Katari, Network Implementation Manager at Akamai Technologies.">
+<title>SamaLab</title>
+<meta name="author" content="Sama">
+<meta name="description" content="SamaLab — A complete IPv4/IPv6 subnetting toolkit.">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1060,10 +1060,27 @@ textarea { resize: vertical; min-height: 80px; }
   width: 100%;
   overflow-x: auto;
 }
+
+/* ── TOAST NOTIFICATIONS ── */
+.toast-container{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{pointer-events:auto;font-family:var(--mono);font-size:12px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text);box-shadow:0 4px 20px rgba(0,0,0,.35);opacity:0;transform:translateX(30px);animation:toastIn .3s ease forwards}
+.toast.out{animation:toastOut .25s ease forwards}
+.toast-ok{border-color:rgba(74,222,128,.4);color:var(--green)}
+.toast-err{border-color:rgba(248,113,113,.4);color:var(--red)}
+.toast-warn{border-color:rgba(251,191,36,.4);color:var(--amber)}
+.toast-info{border-color:rgba(91,156,246,.4);color:var(--blue)}
+@keyframes toastIn{to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateX(30px)}}
+
+/* ── COPY BUTTON ── */
+.copy-btn{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;text-transform:uppercase;letter-spacing:.5px}
+.copy-btn:hover{border-color:var(--blue);color:var(--blue);background:rgba(91,156,246,.06)}
+.copy-btn.copied{border-color:var(--green);color:var(--green)}
 </style>
 </head>
 <body>
 
+<div class="toast-container" id="toast-box"></div>
 <button class="mob-menu-btn" onclick="toggleMob()">☰ Menu</button>
 
 <div class="app">
@@ -1073,8 +1090,8 @@ textarea { resize: vertical; min-height: 80px; }
   <div class="logo">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div>
-        <div class="logo-text">Subnet<em>Lab</em></div>
-        <div class="logo-sub">Pro Edition</div>
+        <div class="logo-text">Sama<em>Lab</em></div>
+        <div class="logo-sub"></div>
       </div>
       <button id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 8px;cursor:pointer;font-size:15px;color:var(--muted2);transition:all 0.2s">🌙</button>
     </div>
@@ -1252,33 +1269,7 @@ textarea { resize: vertical; min-height: 80px; }
     </button>
   </div>
 
-  <div class="nav-section" style="border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px;">
-    <button class="nav-btn" onclick="gotoPage('about',this)" style="color:var(--cyan)">
-      <span class="icon">👨‍💻</span> About Developer
-      <span class="nav-badge" style="background:rgba(56,217,192,0.12);color:var(--cyan);border:1px solid rgba(56,217,192,0.3)">Me</span>
-    </button>
-  </div>
 
-  <!-- ── DEVELOPER CARD ── -->
-  <div class="dev-card">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-      <div class="dev-avatar">CK</div>
-      <div>
-        <div class="dev-name">Chaithanya Kumar</div>
-        <div class="dev-role">Network Implementation Mgr</div>
-        <div class="dev-company">@ Akamai Technologies</div>
-      </div>
-    </div>
-    <div class="dev-links">
-      <a class="dev-link" href="https://www.linkedin.com/in/chaithanya-katari-k/" target="_blank">💼 LinkedIn</a>
-      <a class="dev-link" href="mailto:chaithu1253@gmail.com" style="background:rgba(234,68,53,0.08);color:#ea4335;border-color:rgba(234,68,53,0.25)">✉️ Gmail</a>
-      <a class="dev-link" href="https://wa.me/917799012005" target="_blank" style="background:rgba(37,211,102,0.08);color:#25d366;border-color:rgba(37,211,102,0.25)">💬 WhatsApp</a>
-      <span class="dev-link" style="background:rgba(56,217,192,0.08);color:var(--cyan);border-color:rgba(56,217,192,0.2)">📍 Bengaluru, IN</span>
-    </div>
-    <button class="dev-about-btn" onclick="gotoPage('about',null)">
-      👨‍💻 View Full Profile →
-    </button>
-  </div>
 </aside>
 
 <!-- ──────── MAIN CONTENT ──────── -->
@@ -1292,6 +1283,8 @@ textarea { resize: vertical; min-height: 80px; }
       <div class="page-desc">Enter any IP address with a prefix to get full subnet details</div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <button class="btn-ghost btn-sm" onclick="randomPracticeV4()" title="Generate random IP/prefix">🎲 Random</button>
+      <button class="btn-ghost btn-sm" onclick="copyCalcResults()" title="Copy all results">📋 Copy Results</button>
       <button class="btn-ghost btn-sm" onclick="shareURL()" title="Copy shareable link">🔗 Share</button>
       <button class="btn-ghost btn-sm" onclick="exportPDF()" title="Export as PDF">📄 Export PDF</button>
     </div>
@@ -1415,6 +1408,7 @@ textarea { resize: vertical; min-height: 80px; }
       <div class="btn-row">
         <button class="btn" onclick="calcVLSM()">Plan Subnets →</button>
         <button class="btn-ghost" onclick="addVLSMRow()">+ Add Subnet</button>
+        <button class="btn-ghost" onclick="copyVLSMResults()" title="Copy VLSM table">📋 Copy</button>
         <button class="btn-ghost btn-red" onclick="resetVLSM()">Reset</button>
       </div>
     </div>
@@ -1453,7 +1447,7 @@ textarea { resize: vertical; min-height: 80px; }
           </div>
           <div class="field-group">
             <label class="field-label">IPv6 Address</label>
-            <input type="text" id="v6-in" value="2001:0db8:85a3::8a2e:0370:7334" oninput="analyzeV6()" autocomplete="off" spellcheck="false" style="color:var(--pink)">
+            <input type="text" id="v6-in" value="2001:0db8:85a3::8a2e:0370:7334" oninput="_debouncedV6()" autocomplete="off" spellcheck="false" style="color:var(--pink)">
             <div class="err-msg" id="v6-err">Invalid IPv6 address</div>
           </div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
@@ -1825,6 +1819,7 @@ fd00::dead:beef</textarea>
 172.20.0.0/20</textarea>
       </div>
       <button class="btn" onclick="checkOverlaps()">Check All →</button>
+      <button class="btn-ghost btn-sm" onclick="copyOverlapResults()" title="Copy results">📋 Copy</button>
     </div>
     <div class="card">
       <div class="card-hdr">Results</div>
@@ -1853,6 +1848,7 @@ fd00::dead:beef</textarea>
 192.168.3.0/24</textarea>
       </div>
       <button class="btn" onclick="calcSupernet()">Summarize →</button>
+      <button class="btn-ghost btn-sm" onclick="copySupernetResults()" title="Copy results">📋 Copy</button>
     </div>
     <div class="card">
       <div class="card-hdr">Summary Route</div>
@@ -2381,7 +2377,7 @@ fd00::dead:beef</textarea>
           I've worked closely with network partners on racking, cabling, and configuration of Akamai hardware at scale.
         </p>
         <p style="font-size:13px;color:var(--muted2);line-height:1.85">
-          I built <strong style="color:var(--blue)">SubnetLab Pro</strong> to give networking students, engineers, and
+          I built <strong style="color:var(--blue)">SamaLab</strong> to give networking students, engineers, and
           CCNA/CCNP candidates a free, offline, fully-featured subnetting toolkit — no ads, no logins, no server needed.
           Everything I wish I had when I was learning subnetting myself.
         </p>
@@ -2570,12 +2566,12 @@ fd00::dead:beef</textarea>
   <!-- About this tool -->
   <div class="card" style="margin-top:14px;background:linear-gradient(135deg,rgba(91,156,246,0.07),rgba(56,217,192,0.05));border-color:var(--border2)">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-      <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text)">🧰 About SubnetLab Pro</div>
+      <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text)">🧰 About SamaLab</div>
       <span style="font-family:var(--mono);font-size:9px;padding:2px 9px;border-radius:20px;background:rgba(91,156,246,0.15);color:var(--blue);border:1px solid rgba(91,156,246,0.3)">v13.0</span>
       <span style="font-family:var(--mono);font-size:9px;padding:2px 9px;border-radius:20px;background:rgba(74,222,128,0.1);color:var(--green);border:1px solid rgba(74,222,128,0.25)">100% Offline</span>
     </div>
     <p style="font-size:13px;color:var(--muted2);line-height:1.85;margin-bottom:12px">
-      <strong style="color:var(--text)">SubnetLab Pro</strong> is a fully offline, single-file networking toolkit built by
+      <strong style="color:var(--text)">SamaLab</strong> is a fully offline, single-file networking toolkit built by
       <strong style="color:var(--blue)">Chaithanya Kumar Katari</strong> — a Network Implementation Manager at Akamai Technologies
       with 8+ years of hands-on global network deployments. No ads. No login. No internet needed.
       Open the HTML file and everything works instantly.
@@ -2673,7 +2669,7 @@ fd00::dead:beef</textarea>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--cyan)">SubnetLab Pro v13.0</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--cyan)">SamaLab v13.0</div>
       <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">100% offline · No ads · Free forever</div>
     </div>
   </div>
@@ -10183,6 +10179,114 @@ function prefixFromMask(m) {
   return c;
 }
 
+// ─── SHARED HELPERS ──────────────────────────────────────────────────────
+// Toast notification
+function showToast(msg, type='info', duration=2500) {
+  const box = $('toast-box'); if(!box) return;
+  const t = document.createElement('div');
+  t.className = 'toast toast-' + type;
+  t.textContent = msg;
+  box.appendChild(t);
+  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 300); }, duration);
+}
+
+// Copy to clipboard with toast feedback
+function copyText(text, label) {
+  if(!text || text === '—') { showToast('Nothing to copy', 'warn'); return; }
+  navigator.clipboard.writeText(text).then(
+    () => showToast((label||'Value') + ' copied!', 'ok'),
+    () => showToast('Copy failed', 'err')
+  );
+}
+
+// Copy inner text of an element by ID
+function copyEl(id, label) {
+  const el = $(id); if(!el) return;
+  copyText(el.textContent.trim(), label);
+}
+
+// Safe element getter (returns dummy to avoid null errors)
+function safeEl(id) {
+  return $(id) || { value:'', textContent:'', innerHTML:'', style:{}, className:'', classList:{ add(){}, remove(){}, toggle(){}, contains(){ return false; } }, dataset:{}, querySelector(){ return null; }, querySelectorAll(){ return []; } };
+}
+
+// Debounce utility
+function debounce(fn, ms=150) {
+  let t; return function(...a) { clearTimeout(t); t = setTimeout(() => fn.apply(this, a), ms); };
+}
+
+// Field validation state helper
+function setFieldState(inputId, errId, isValid, value) {
+  const inp = $(inputId), err = $(errId);
+  if(inp) inp.className = value ? (isValid ? 'ok' : 'error') : '';
+  if(err) err.className = 'err-msg' + (!isValid && value ? ' show' : '');
+  return isValid;
+}
+
+// Random IPv4 address generator
+function randomIPv4() {
+  const presets = [
+    { ip: [10, 0, 0, 0], pfxRange: [8, 30] },
+    { ip: [172, 16, 0, 0], pfxRange: [12, 30] },
+    { ip: [192, 168, 0, 0], pfxRange: [16, 30] },
+  ];
+  const p = presets[Math.floor(Math.random() * presets.length)];
+  const octs = p.ip.map((o, i) => i < 2 ? o : Math.floor(Math.random() * 256));
+  const pfx = p.pfxRange[0] + Math.floor(Math.random() * (p.pfxRange[1] - p.pfxRange[0] + 1));
+  return { ip: octs.join('.'), pfx: '/' + pfx };
+}
+
+// Random valid IPv6 address generator
+function randomIPv6() {
+  const types = [
+    () => '2001:db8:' + Array(6).fill(0).map(() => Math.floor(Math.random()*65536).toString(16)).join(':'),
+    () => 'fe80::' + Array(2).fill(0).map(() => Math.floor(Math.random()*65536).toString(16)).join(':'),
+    () => 'fd' + Math.floor(Math.random()*256).toString(16).padStart(2,'0') + ':' + Array(3).fill(0).map(() => Math.floor(Math.random()*65536).toString(16)).join(':') + '::1',
+  ];
+  return types[Math.floor(Math.random() * types.length)]();
+}
+
+// ─── AUTOSAVE / RESTORE ─────────────────────────────────────────────────
+const SAVE_KEY = 'samalab_state';
+function saveAppState() {
+  try {
+    const fields = {};
+    document.querySelectorAll('input[id], textarea[id], select[id]').forEach(el => {
+      if(el.type === 'range') fields[el.id] = el.value;
+      else if(el.type === 'checkbox') fields[el.id] = el.checked;
+      else if(el.value) fields[el.id] = el.value;
+    });
+    const page = location.hash.replace('#','') || 'calc';
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ fields, page, ts: Date.now() }));
+  } catch(e) {}
+}
+function restoreAppState() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return;
+    const state = JSON.parse(raw);
+    if(state.fields) {
+      Object.entries(state.fields).forEach(([id, val]) => {
+        const el = $(id);
+        if(!el) return;
+        if(el.type === 'checkbox') el.checked = val;
+        else el.value = val;
+      });
+    }
+    if(state.page && state.page !== 'calc') {
+      setTimeout(() => {
+        const btn = document.querySelector('.nav-btn[onclick*="\'' + state.page + '\'"]');
+        gotoPage(state.page, btn);
+      }, 50);
+    }
+  } catch(e) {}
+}
+
+// Auto-save on input changes (debounced)
+const _debouncedSave = debounce(saveAppState, 800);
+document.addEventListener('input', _debouncedSave);
+document.addEventListener('change', _debouncedSave);
+
 // ─── NAVIGATION ──────────────────────────────────────────────────────────
 function gotoPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -10221,7 +10325,21 @@ function gotoPage(id, btn) {
   if(id==='tcp-anim') { setTimeout(()=>tcpAnimInit(),100); }
   if(id==='pfx-builder') { setTimeout(()=>pfxBuilderInit(),100); }
   if(history && history.pushState) history.pushState(null,'','#'+id);
+  saveAppState();
 }
+
+// Restore page from URL hash on load
+(function(){
+  restoreAppState();
+  const hash = location.hash.replace('#','');
+  if(hash) {
+    const btn = document.querySelector('.nav-btn[onclick*="\'' + hash + '\'"]');
+    gotoPage(hash, btn);
+  } else {
+    setTimeout(liveCalc, 60);
+  }
+})();
+
 function toggleMob() { $('sidebar').classList.toggle('open'); }
 function closeMob() { $('sidebar').classList.remove('open'); }
 
@@ -10234,16 +10352,68 @@ function setExample(ip, pfx) {
   liveCalc();
 }
 
+// Random practice: IPv4
+function randomPracticeV4() {
+  const r = randomIPv4();
+  $('ip-in').value = r.ip;
+  $('pfx-in').value = r.pfx;
+  liveCalc();
+  showToast('Random: ' + r.ip + r.pfx, 'info');
+}
+
+// Random practice: IPv6
+function randomPracticeV6() {
+  const addr = randomIPv6();
+  if($('v6-in')) { $('v6-in').value = addr; analyzeV6(); }
+  showToast('Random IPv6 generated', 'info');
+}
+
+// Copy IPv4 calculator results
+function copyCalcResults() {
+  const ids = ['r-net','r-bc','r-first','r-last','r-hosts','r-total','r-mask','r-wild','r-class','r-cidr'];
+  const labels = ['Network','Broadcast','First Host','Last Host','Usable Hosts','Total IPs','Mask','Wildcard','Class','CIDR'];
+  const lines = ids.map((id,i) => { const el=$(id); return el ? labels[i]+': '+el.textContent : ''; }).filter(l=>l&&!l.endsWith('—'));
+  if(!lines.length) { showToast('Calculate first', 'warn'); return; }
+  copyText(lines.join('\n'), 'Subnet results');
+}
+
+// Copy IPv6 analysis results
+function copyV6Results() {
+  const el = $('v6-results');
+  if(!el || !el.textContent.trim()) { showToast('Analyze an address first', 'warn'); return; }
+  const cards = el.querySelectorAll('.r-card');
+  const lines = [];
+  cards.forEach(c => {
+    const lbl = c.querySelector('.r-label');
+    const val = c.querySelector('.r-val');
+    if(lbl && val) lines.push(lbl.textContent + ': ' + val.textContent);
+  });
+  copyText(lines.join('\n'), 'IPv6 analysis');
+}
+
+// Copy VLSM results table
+function copyVLSMResults() {
+  const el = $('vlsm-result');
+  if(!el) return;
+  const tbl = el.querySelector('table');
+  if(!tbl) { showToast('Plan subnets first', 'warn'); return; }
+  const rows = tbl.querySelectorAll('tr');
+  const lines = [];
+  rows.forEach(r => {
+    const cells = r.querySelectorAll('th, td');
+    lines.push([...cells].map(c => c.textContent.trim()).join('\t'));
+  });
+  copyText(lines.join('\n'), 'VLSM plan');
+}
+
 function calculate() {
   const rawIP = $('ip-in').value.trim();
   const rawPfx = $('pfx-in').value.trim();
   const ipOk = validateIP(rawIP);
   const pfxOk = validatePrefix(rawPfx);
 
-  $('ip-in').className = rawIP ? (ipOk ? 'ok' : 'error') : '';
-  $('pfx-in').className = rawPfx ? (pfxOk ? 'ok' : 'error') : '';
-  $('ip-err').className = 'err-msg' + (!ipOk && rawIP ? ' show' : '');
-  $('pfx-err').className = 'err-msg' + (!pfxOk && rawPfx ? ' show' : '');
+  setFieldState('ip-in', 'ip-err', ipOk, rawIP);
+  setFieldState('pfx-in', 'pfx-err', pfxOk, rawPfx);
 
   if(!ipOk || !pfxOk) return;
 
@@ -10554,6 +10724,20 @@ function checkOverlaps() {
     ${nets.map(n=>{ const bad=overlaps.some(o=>o.a===n.cidr||o.b===n.cidr); return `<tr><td>${n.cidr}</td><td>${n2ip(n.net)} – ${n2ip(n.bc)}</td><td style="color:${bad?'var(--red)':'var(--green)'}">${bad?'⚠ Overlap':'✓ OK'}</td></tr>`; }).join('')}
     </table></div>`;
   }
+}
+
+// Copy overlap results
+function copyOverlapResults() {
+  const el = $('ov-result');
+  if(!el || !el.textContent.trim() || el.textContent.includes('Enter networks')) { showToast('Check overlaps first', 'warn'); return; }
+  copyText(el.innerText.trim(), 'Overlap results');
+}
+
+// Copy supernet results
+function copySupernetResults() {
+  const el = $('sn-result');
+  if(!el || !el.textContent.trim() || el.textContent.includes('Enter networks')) { showToast('Summarize first', 'warn'); return; }
+  copyText(el.innerText.trim(), 'Supernet results');
 }
 
 // ─── SUPERNET ─────────────────────────────────────────────────────────────
@@ -11023,6 +11207,7 @@ function analyzeV6() {
 }
 
 function setV6(addr) { if($('v6-in')) { $('v6-in').value=addr; analyzeV6(); } }
+const _debouncedV6 = debounce(analyzeV6, 120);
 
 // ─── COMPRESSOR ───────────────────────────────────────────────────────────
 function v6Compress() {
@@ -11491,7 +11676,7 @@ function exportPDF() {
   }).join('');
   var w = window.open('','_blank');
   if (!w) { showToast('⚠️ Allow pop-ups to export PDF'); return; }
-  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>SubnetLab '+ip+pfx+'</title><style>'
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>SamaLab '+ip+pfx+'</title><style>'
     +'*{box-sizing:border-box;margin:0;padding:0}'
     +'body{font-family:Arial,sans-serif;padding:36px;color:#1a1d30;max-width:680px;margin:0 auto}'
     +'h1{font-size:22px;color:#1a2a6c;margin-bottom:6px}'
@@ -11505,10 +11690,10 @@ function exportPDF() {
     +'.footer{margin-top:22px;font-size:10px;color:#bbb;border-top:1px solid #eee;padding-top:12px}'
     +'@media print{.pbtn{display:none}}'
     +'</style></head><body>'
-    +'<h1>SubnetLab Pro — Subnet Report</h1>'
+    +'<h1>SamaLab — Subnet Report</h1>'
     +'<p class="sub">Generated: '+new Date().toLocaleString()+' &nbsp;·&nbsp; Network: <strong>'+ip+pfx+'</strong></p>'
     +'<table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>'+tbody+'</tbody></table>'
-    +'<p class="footer">SubnetLab Pro</p>'
+    +'<p class="footer">SamaLab</p>'
     +'<br><button class="pbtn" onclick="window.print()" style="background:#1a2a6c;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;cursor:pointer;margin-top:10px">🖨️ Print / Save as PDF</button>'
     +'</body></html>');
   w.document.close();
@@ -16692,7 +16877,7 @@ function ndGenerate(){
   var ipv6mode=d.ipv6||'ipv4', sec=d.security||'basic';
 
   lines.push('! ═════════════════════════════════════════════════════');
-  lines.push('! SubnetLab Pro — Network Design Wizard');
+  lines.push('! SamaLab — Network Design Wizard');
   lines.push('! Protocol: '+proto.toUpperCase()+'  Sites: '+sites+'  Redundancy: '+redund);
   lines.push('! IPv6: '+ipv6mode+'  Security: '+sec);
   lines.push('! ═════════════════════════════════════════════════════');
